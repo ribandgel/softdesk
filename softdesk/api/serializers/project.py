@@ -7,7 +7,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ("id", "title", "description", "type", "author")
-        read_only_fields = "id"
+        read_only_fields = ("id",)
 
 
 class IssueSerializer(serializers.ModelSerializer):
@@ -25,11 +25,11 @@ class IssueSerializer(serializers.ModelSerializer):
             "assignee",
             "created",
         )
-        read_only_fields = "id"
+        read_only_fields = ("id",)
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ("id", "description", "author", "issue", "created")
-        read_only_fields = "id"
+        read_only_fields = ("id",)

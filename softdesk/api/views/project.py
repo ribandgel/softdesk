@@ -1,12 +1,14 @@
 from django.db.models import Q
 from rest_framework.permissions import SAFE_METHODS, AllowAny
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 
 from softdesk.api.models import Comment, Issue, Project
 from softdesk.api.serializers import CommentSerializer, IssueSerializer, ProjectSerializer
+from .common import AtomicModelViewSet
 
 
-class ProjectViewSet(GenericViewSet):
+class ProjectViewSet(AtomicModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = ProjectSerializer
 
@@ -20,7 +22,7 @@ class ProjectViewSet(GenericViewSet):
         return queryset.order_by("-id")
 
 
-class IssueViewSet(GenericViewSet):
+class IssueViewSet(AtomicModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = IssueSerializer
 
@@ -36,7 +38,7 @@ class IssueViewSet(GenericViewSet):
         return queryset.order_by("-id")
 
 
-class CommentViewSet(GenericViewSet):
+class CommentViewSet(AtomicModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CommentSerializer
 

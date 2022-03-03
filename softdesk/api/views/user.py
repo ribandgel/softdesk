@@ -3,6 +3,7 @@ from rest_framework.viewsets import GenericViewSet
 
 from softdesk.api.models import Contributor, User
 from softdesk.api.serializers import ContributorSerializer, UserSerializer
+from .common import AtomicModelViewSet
 
 
 class UserViewSet(GenericViewSet):
@@ -17,7 +18,7 @@ class UserViewSet(GenericViewSet):
         return queryset.order_by("-id")
 
 
-class ContributorViewSet(GenericViewSet):
+class ContributorViewSet(AtomicModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = ContributorSerializer
 
