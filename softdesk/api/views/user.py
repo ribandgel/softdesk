@@ -1,13 +1,14 @@
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 
 from softdesk.api.models import Contributor, User
 from softdesk.api.serializers import ContributorSerializer, UserSerializer
+
 from .common import AtomicModelViewSet
 
 
 class UserViewSet(GenericViewSet):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
 
     def get_queryset(self):
@@ -19,7 +20,7 @@ class UserViewSet(GenericViewSet):
 
 
 class ContributorViewSet(AtomicModelViewSet):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = ContributorSerializer
 
     def get_queryset(self):
