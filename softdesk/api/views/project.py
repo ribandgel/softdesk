@@ -1,5 +1,5 @@
 from django.db.models import Q
-from rest_framework.permissions import SAFE_METHODS, AllowAny
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 
@@ -13,9 +13,7 @@ class ProjectViewSet(AtomicModelViewSet):
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
-        if self.request.method in SAFE_METHODS:
-            queryset = Project.objects.all()
-        elif self.request and not self.request.user.is_anonymous:
+        if self.request and not self.request.user.is_anonymous:
             queryset = Project.objects.filter(author=self.request.user)
         else:
             queryset = Project.objects.none()
@@ -27,9 +25,7 @@ class IssueViewSet(AtomicModelViewSet):
     serializer_class = IssueSerializer
 
     def get_queryset(self):
-        if self.request.method in SAFE_METHODS:
-            queryset = Issue.objects.all()
-        elif self.request and not self.request.user.is_anonymous:
+        if self.request and not self.request.user.is_anonymous:
             queryset = Issue.objects.filter(
                 Q(author=self.request.user) | Q(assignee=self.request.user)
             )
@@ -43,9 +39,7 @@ class CommentViewSet(AtomicModelViewSet):
     serializer_class = CommentSerializer
 
     def get_queryset(self):
-        if self.request.method in SAFE_METHODS:
-            queryset = Comment.objects.all()
-        elif self.request and not self.request.user.is_anonymous:
+        if self.request and not self.request.user.is_anonymous:
             queryset = Comment.objects.filter(author=self.request.user)
         else:
             queryset = Comment.objects.none()
